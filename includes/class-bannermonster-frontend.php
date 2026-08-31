@@ -61,6 +61,11 @@ class BannerMonster_Frontend {
 
 			$style = $this->build_styles( $m );
 
+			// overlay (rendered OUTSIDE wrapper so position:fixed covers full viewport)
+			if ( $m['bm_overlay'] && strpos( $type, 'popup' ) !== false ) {
+				printf( '<div class="bm-overlay" data-id="%d"></div>', absint( $b->ID ) );
+			}
+
 			// wrapper
 			printf(
 				'<div id="%s" class="%s" data-id="%d" data-trigger="%s" data-sec="%d" data-scr="%d" data-close="%d" data-overlay="%d" data-reappear="%d">',
@@ -74,11 +79,6 @@ class BannerMonster_Frontend {
 				absint( $m['bm_overlay'] ),
 				absint( $m['bm_reappear'] )
 			);
-
-			// overlay
-			if ( $m['bm_overlay'] && strpos( $type, 'popup' ) !== false ) {
-				printf( '<div class="bm-overlay" data-id="%d"></div>', absint( $b->ID ) );
-			}
 
 			// box
 			printf( '<div class="%s" style="%s">', esc_attr( $box_cls ), esc_attr( $style ) );
