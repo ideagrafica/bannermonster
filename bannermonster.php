@@ -5,7 +5,7 @@
  * Description: Create custom banners and popups with advanced targeting on pages, posts, custom post types and taxonomies.
  * Version: 1.0.0
  * Author: Marco De Sangro (inCod)
- * Author URI: https://incod.it
+ * Author URI: https://incod.it/bannermonster/
  * License: GPL-2.0+
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: bannermonster
