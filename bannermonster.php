@@ -17,14 +17,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BM_VERSION', '1.0.0' );
-define( 'BM_PATH', plugin_dir_path( __FILE__ ) );
-define( 'BM_URL', plugin_dir_url( __FILE__ ) );
-define( 'BM_BASE', plugin_basename( __FILE__ ) );
+define( 'BANNERMONSTER_VERSION', '1.0.0' );
+define( 'BANNERMONSTER_PATH', plugin_dir_path( __FILE__ ) );
+define( 'BANNERMONSTER_URL', plugin_dir_url( __FILE__ ) );
+define( 'BANNERMONSTER_BASE', plugin_basename( __FILE__ ) );
 
-require_once BM_PATH . 'includes/class-bannermonster-cpt.php';
-require_once BM_PATH . 'includes/class-bannermonster-admin.php';
-require_once BM_PATH . 'includes/class-bannermonster-frontend.php';
+require_once BANNERMONSTER_PATH . 'includes/class-bannermonster-cpt.php';
+require_once BANNERMONSTER_PATH . 'includes/class-bannermonster-admin.php';
+require_once BANNERMONSTER_PATH . 'includes/class-bannermonster-frontend.php';
 
 add_action( 'init', array( 'BannerMonster_CPT', 'register_post_type' ) );
 

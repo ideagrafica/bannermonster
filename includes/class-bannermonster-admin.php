@@ -24,8 +24,8 @@ class BannerMonster_Admin {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
-		wp_enqueue_style( 'bm-admin', BM_URL . 'admin/css/admin.css', array(), BM_VERSION );
-		wp_enqueue_script( 'bm-admin', BM_URL . 'admin/js/admin.js', array( 'jquery' ), BM_VERSION, true );
+		wp_enqueue_style( 'bm-admin', BANNERMONSTER_URL . 'admin/css/admin.css', array(), BANNERMONSTER_VERSION );
+		wp_enqueue_script( 'bm-admin', BANNERMONSTER_URL . 'admin/js/admin.js', array( 'jquery' ), BANNERMONSTER_VERSION, true );
 	}
 
 	public function register_metaboxes() {

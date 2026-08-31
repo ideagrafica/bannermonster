@@ -16,7 +16,7 @@ class BannerMonster_Frontend {
 			return;
 		}
 
-		wp_enqueue_style( 'bm-front', BM_URL . 'public/css/frontend.css', array(), BM_VERSION );
+		wp_enqueue_style( 'bm-front', BANNERMONSTER_URL . 'public/css/frontend.css', array(), BANNERMONSTER_VERSION );
 
 		$js_data = array();
 		foreach ( $banners as $b ) {
@@ -33,7 +33,7 @@ class BannerMonster_Frontend {
 			);
 		}
 
-		wp_register_script( 'bm-front', BM_URL . 'public/js/frontend.js', array(), BM_VERSION, true );
+		wp_register_script( 'bm-front', BANNERMONSTER_URL . 'public/js/frontend.js', array(), BANNERMONSTER_VERSION, true );
 		wp_localize_script( 'bm-front', 'bmData', array(
 			'banners' => $js_data,
 			'debug'   => isset( $_GET['bm_debug'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bm_debug'] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
