@@ -1,0 +1,33 @@
+# macOS
+._*
+.DS_Store
+.Spotlight-V100
+.Trashes
+__MACOSX/
+
+# Hidden files
+.gitkeep
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node (if ever used for build)
+node_modules/
+npm-debug.log
+
+# Archives
+*.zip
+*.tar.gz
+
+# Build artifacts
+dist/
+build/
