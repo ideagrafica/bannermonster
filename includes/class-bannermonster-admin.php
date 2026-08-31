@@ -33,6 +33,7 @@ class BannerMonster_Admin {
 		add_meta_box( 'bm_display', __( 'Regole di Visualizzazione', 'bannermonster' ), array( $this, 'box_display' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
 		add_meta_box( 'bm_trigger', __( 'Trigger', 'bannermonster' ), array( $this, 'box_trigger' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
 		add_meta_box( 'bm_style', __( 'Stile & Personalizzazione', 'bannermonster' ), array( $this, 'box_style' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
+		add_meta_box( 'bm_debug', __( 'Debug & Controllo', 'bannermonster' ), array( $this, 'box_debug' ), BannerMonster_CPT::POST_TYPE, 'normal', 'default' );
 	}
 
 	/* ---- Metabox: Tipo ---- */
@@ -223,6 +224,49 @@ class BannerMonster_Admin {
 				<td><textarea name="bm_custom_css" id="bm_custom_css" class="large-text code" rows="4"><?php echo esc_textarea( $m['bm_custom_css'] ); ?></textarea></td>
 			</tr>
 		</table>
+		<?php
+	}
+
+	/* ---- Metabox: Debug & Controllo ---- */
+
+	public function box_debug() {
+		$site_url = home_url();
+		?>
+		<div style="max-width: 700px;">
+			<h4 style="margin-top:0"><?php esc_html_e( 'Modalit&agrave; Debug', 'bannermonster' ); ?></h4>
+			<p><?php esc_html_e( 'Il mode debug ti permette di testare i banner ignorando il localStorage del browser. Quando attivo, tutti i banner vengono mostrati ad ogni caricamento pagina, indipendentemente dal fatto che siano stati chiusi in precedenza.', 'bannermonster' ); ?></p>
+
+			<table class="form-table bm-table">
+				<tr>
+					<th style="width:180px"><?php esc_html_e( 'URL di test', 'bannermonster' ); ?></th>
+					<td>
+						<code style="background:#f1f1f1; padding:6px 12px; border-radius:4px; display:inline-block; word-break:break-all; font-size:13px;">
+							<?php echo esc_html( $site_url ); ?>/?bm_debug=1
+						</code>
+						<p class="description" style="margin-top:6px;"><?php esc_html_e( 'Aggiungi questo parametro a qualsiasi URL del tuo sito per attivare il debug.', 'bannermonster' ); ?></p>
+					</td>
+			 </tr>
+			</table>
+
+			<h4><?php esc_html_e( 'Come funziona', 'bannermonster' ); ?></h4>
+			<ol style="line-height:2; padding-left:20px; color:#555;">
+				<li><?php esc_html_e( 'Aggiungi <code>?bm_debug=1</code> alla fine di qualsiasi URL.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Tutti i banner attivi appariranno ad ogni caricamento pagina.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Il localStorage viene ignorato: anche se il visitatore ha chiuso il banner, questo ricomparir&agrave;.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Nell\'admin metabox comparir&agrave; un avviso giallo che indica che la modalit&agrave; debug &egrave; attiva.', 'bannermonster' ); ?></li>
+			</ol>
+
+			<h4 style="margin-top:24px"><?php esc_html_e( 'Controllo Ricomparsa', 'bannermonster' ); ?></h4>
+			<p><?php esc_html_e( 'Nel metabox <strong>Trigger</strong> puoi impostare il campo "Ricompari dopo (min)" per controllare quante minuti dopo la chiusura un banner debba essere mostrato di nuovo. Impostando 0, il banner non ricomparir&agrave; mai pi&ugrave; dopo la chiusura.', 'bannermonster' ); ?></p>
+
+			<h4 style="margin-top:24px"><?php esc_html_e( 'Note tecniche', 'bannermonster' ); ?></h4>
+			<ul style="line-height:2; padding-left:20px; color:#555;">
+				<li><?php esc_html_e( 'Lo stato di chiusura viene salvato nel <code>localStorage</code> del browser con chiave <code>bm_closed</code>.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Il formato &egrave; un oggetto JSON: <code>{"ID": timestamp, ...}</code>.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Il parametro <code>?bm_debug=1</code> viene passato al frontend via <code>wp_localize_script</code>.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Nessun cookie viene utilizzato: tutto il sistema si basa su localStorage.', 'bannermonster' ); ?></li>
+			</ul>
+		</div>
 		<?php
 	}
 
