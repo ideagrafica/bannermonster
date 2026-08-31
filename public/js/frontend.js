@@ -59,11 +59,16 @@
 
 	function show(el) {
 		el.classList.add('bm-visible');
+		var id = el.getAttribute('data-id');
+		var ov = document.querySelector('.bm-overlay[data-id="' + id + '"]');
+		if (ov) ov.style.display = '';
 	}
 
 	function hide(id) {
 		var el = document.getElementById('bm-' + id);
 		if (el) el.classList.remove('bm-visible');
+		var ov = document.querySelector('.bm-overlay[data-id="' + id + '"]');
+		if (ov) ov.style.display = 'none';
 		saveClosed(id);
 	}
 
