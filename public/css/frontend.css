@@ -137,14 +137,6 @@ dialog.bm-dialog.bm-popup_bottom_left .bm-box {
   outline-offset: 2px;
 }
 
-/* Form method="dialog" — invisible, serves accessibility only */
-form[method="dialog"] {
-  display: contents !important;
-  position: static !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-
 /* --- Content --- */
 .bm-inner {
   position: relative;

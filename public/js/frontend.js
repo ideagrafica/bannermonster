@@ -170,6 +170,17 @@
 
 	function init() {
 		loadClosed();
+
+		document.addEventListener('click', function (e) {
+			var btn = e.target.closest('.bm-x');
+			if (!btn) return;
+			var dialog = btn.closest('dialog');
+			if (!dialog) return;
+			var id = parseInt(dialog.getAttribute('data-id'), 10);
+			dialog.close();
+			saveClosed(id);
+		});
+
 		if (typeof bmData !== 'undefined') {
 			debugMode = !!bmData.debug;
 			if (debugMode) {

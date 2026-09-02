@@ -81,10 +81,11 @@ class BannerMonster_Frontend {
 			// box
 			printf( '<div class="%s" style="%s">', esc_attr( $box_cls ), esc_attr( $style ) );
 
-			// close button — wrapped in form method="dialog" for native close
+			// close button
 			if ( $m['bm_close_enabled'] ) {
 				printf(
-					'<form method="dialog"><button class="bm-x" aria-label="%s">&times;</button></form>',
+					'<button class="bm-x" data-id="%d" aria-label="%s">&times;</button>',
+					absint( $b->ID ),
 					esc_attr__( 'Chiudi', 'bannermonster' )
 				);
 			}
