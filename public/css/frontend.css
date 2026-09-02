@@ -1,64 +1,61 @@
-/* BannerMonster - Frontend */
+/* ============================================
+   BannerMonster - Frontend (WCAG 2.2 / Dialog)
+   ============================================ */
 
-/* --- Base --- */
-.bm-wrap {
-  display: none !important;
+/* --- Dialog base (reset UA sheet) --- */
+dialog.bm-dialog {
+  padding: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  max-width: 90vw !important;
   z-index: 999999 !important;
-}
-.bm-wrap.bm-visible {
-  display: block !important;
+  color: inherit;
 }
 
-/* --- Banner top --- */
-.bm-wrap.bm-banner_top {
+dialog.bm-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5) !important;
+  z-index: 999998 !important;
+}
+
+/* --- Banner Top --- */
+dialog.bm-dialog.bm-banner_top[open] {
   position: fixed !important;
   top: 0 !important;
   left: 0 !important;
   right: 0 !important;
+  bottom: auto !important;
   width: 100% !important;
+  margin: 0 !important;
+  transform: none !important;
 }
 
-/* --- Banner bottom --- */
-.bm-wrap.bm-banner_bottom {
+/* --- Banner Bottom --- */
+dialog.bm-dialog.bm-banner_bottom[open] {
   position: fixed !important;
+  top: auto !important;
   bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
+  margin: 0 !important;
+  transform: none !important;
 }
 
-/* --- Container --- */
-.bm-box {
+/* --- Box container --- */
+.bm-dialog .bm-box {
   position: relative;
   width: 100%;
   box-sizing: border-box;
   z-index: 2;
 }
-.bm-visible .bm-box {
+
+/* Animazione apertura */
+dialog[open].bm-dialog .bm-box {
   animation: bmFadeIn .35s ease;
 }
 
-/* --- Overlay (outside wrapper, covers full viewport, sits below popup) --- */
-.bm-overlay {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(0,0,0,.5) !important;
-  z-index: 999998 !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  pointer-events: auto !important;
-}
-.bm-visible .bm-overlay {
-  animation: bmFadeIn .25s ease;
-}
-
-/* --- Popup center --- */
-.bm-wrap.bm-popup_center {
+/* --- Popup Center --- */
+dialog.bm-dialog.bm-popup_center {
   position: fixed !important;
   top: 50% !important;
   left: 50% !important;
@@ -69,16 +66,16 @@
   transform: translate(-50%, -50%) !important;
   -webkit-transform: translate(-50%, -50%) !important;
   margin: 0 !important;
-  padding: 0 !important;
-}
-.bm-wrap.bm-popup_center .bm-box {
-  margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0,0,0,.35);
 }
 
-/* --- Popup bottom right --- */
-.bm-wrap.bm-popup_bottom_right {
+dialog.bm-dialog.bm-popup_center .bm-box {
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
+}
+
+/* --- Popup Bottom Right --- */
+dialog.bm-dialog.bm-popup_bottom_right {
   position: fixed !important;
   bottom: 20px !important;
   right: 20px !important;
@@ -87,15 +84,16 @@
   width: auto !important;
   max-width: 90vw !important;
   margin: 0 !important;
-  padding: 0 !important;
-}
-.bm-wrap.bm-popup_bottom_right .bm-box {
-  border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,.25);
+  transform: none !important;
 }
 
-/* --- Popup bottom left --- */
-.bm-wrap.bm-popup_bottom_left {
+dialog.bm-dialog.bm-popup_bottom_right .bm-box {
+  border-radius: 8px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
+}
+
+/* --- Popup Bottom Left --- */
+dialog.bm-dialog.bm-popup_bottom_left {
   position: fixed !important;
   bottom: 20px !important;
   left: 20px !important;
@@ -104,11 +102,12 @@
   width: auto !important;
   max-width: 90vw !important;
   margin: 0 !important;
-  padding: 0 !important;
+  transform: none !important;
 }
-.bm-wrap.bm-popup_bottom_left .bm-box {
+
+dialog.bm-dialog.bm-popup_bottom_left .bm-box {
   border-radius: 8px;
-  box-shadow: 0 4px 18px rgba(0,0,0,.25);
+  box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
 }
 
 /* --- Close button --- */
@@ -127,7 +126,17 @@
   z-index: 10;
   color: inherit;
 }
-.bm-x:hover { opacity: 1; }
+.bm-x:hover,
+.bm-x:focus {
+  opacity: 1;
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* Form method="dialog" — invisible, serves accessibility only */
+.bm-x form[method="dialog"] {
+  display: contents;
+}
 
 /* --- Content --- */
 .bm-inner {
@@ -142,13 +151,23 @@
   to { opacity: 1; }
 }
 
+/* --- Focus visible — WCAG 2.4.7 --- */
+dialog.bm-dialog:focus {
+  outline: none;
+}
+
+.bm-dialog :focus-visible {
+  outline: 2px solid #005fcc;
+  outline-offset: 2px;
+}
+
 /* --- Responsive --- */
 @media (max-width: 768px) {
-  .bm-wrap.bm-popup_center {
+  dialog.bm-dialog.bm-popup_center {
     width: 90vw !important;
   }
-  .bm-wrap.bm-popup_bottom_right,
-  .bm-wrap.bm-popup_bottom_left {
+  dialog.bm-dialog.bm-popup_bottom_right,
+  dialog.bm-dialog.bm-popup_bottom_left {
     left: 10px !important;
     right: 10px !important;
     bottom: 10px !important;

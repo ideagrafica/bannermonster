@@ -22,14 +22,13 @@ class BannerMonster_Frontend {
 		foreach ( $banners as $b ) {
 			$m = BannerMonster_CPT::get_meta( $b->ID );
 			$js_data[] = array(
-				'id'            => absint( $b->ID ),
-				'type'          => sanitize_text_field( $m['bm_type'] ),
-				'trigger'       => sanitize_text_field( $m['bm_trigger'] ),
-				'seconds'       => absint( $m['bm_trigger_seconds'] ),
-				'scroll'        => absint( $m['bm_trigger_scroll'] ),
-				'close_on_click'=> absint( $m['bm_close_on_click'] ),
-				'overlay'       => absint( $m['bm_overlay'] ),
-				'reappear'      => absint( $m['bm_reappear'] ),
+				'id'             => absint( $b->ID ),
+				'type'           => sanitize_text_field( $m['bm_type'] ),
+				'trigger'        => sanitize_text_field( $m['bm_trigger'] ),
+				'seconds'        => absint( $m['bm_trigger_seconds'] ),
+				'scroll'         => absint( $m['bm_trigger_scroll'] ),
+				'backdrop_close' => absint( $m['bm_close_on_click'] ),
+				'reappear'       => absint( $m['bm_reappear'] ),
 			);
 		}
 
@@ -53,42 +52,48 @@ class BannerMonster_Frontend {
 			$content = apply_filters( 'the_content', $b->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
 			$id    = 'bm-' . $b->ID;
 
-			$wrap_cls = 'bm-wrap bm-' . $type;
 			$box_cls  = 'bm-box';
 			if ( ! empty( $m['bm_css_class'] ) ) {
 				$box_cls .= ' ' . esc_attr( $m['bm_css_class'] );
 			}
 
 			$style = $this->build_styles( $m );
+			$is_popup = strpos( $type, 'popup' ) !== false;
 
-			// overlay (rendered OUTSIDE wrapper so position:fixed covers full viewport)
-			if ( $m['bm_overlay'] && strpos( $type, 'popup' ) !== false ) {
-				printf( '<div class="bm-overlay" data-id="%d"></div>', absint( $b->ID ) );
-			}
+			// Accessible name: post title or fallback
+			$dialog_title = get_the_title( $b->ID );
+			$aria_label   = ! empty( $dialog_title ) ? $dialog_title : __( 'Banner', 'bannermonster' );
 
-			// wrapper
+			// Dialog wrapper
 			printf(
-				'<div id="%s" class="%s" data-id="%d" data-trigger="%s" data-sec="%d" data-scr="%d" data-close="%d" data-overlay="%d" data-reappear="%d">',
+				'<dialog id="%s" class="bm-dialog bm-%s" aria-label="%s"%s data-id="%d" data-trigger="%s" data-sec="%d" data-scr="%d" data-reappear="%d">',
 				esc_attr( $id ),
-				esc_attr( $wrap_cls ),
+				esc_attr( $type ),
+				esc_attr( $aria_label ),
+				$is_popup ? '' : ' open',
 				absint( $b->ID ),
 				esc_attr( $m['bm_trigger'] ),
 				absint( $m['bm_trigger_seconds'] ),
 				absint( $m['bm_trigger_scroll'] ),
-				absint( $m['bm_close_on_click'] ),
-				absint( $m['bm_overlay'] ),
 				absint( $m['bm_reappear'] )
 			);
 
 			// box
 			printf( '<div class="%s" style="%s">', esc_attr( $box_cls ), esc_attr( $style ) );
 
-			// close btn
+			// close button — wrapped in form method="dialog" for native close
 			if ( $m['bm_close_enabled'] ) {
-				printf( '<button class="bm-x" data-id="%d" aria-label="%s">&times;</button>', absint( $b->ID ), esc_attr__( 'Chiudi', 'bannermonster' ) );
+				printf(
+					'<form method="dialog"><button class="bm-x" aria-label="%s">&times;</button></form>',
+					esc_attr__( 'Chiudi', 'bannermonster' )
+				);
 			}
 
-			echo '<div class="bm-inner">' . wp_kses_post( $content ) . '</div></div></div>';
+			// content
+			echo '<div class="bm-inner">' . wp_kses_post( $content ) . '</div>';
+
+			// close box and dialog
+			echo '</div></dialog>';
 
 			// custom CSS
 			if ( ! empty( $m['bm_custom_css'] ) ) {

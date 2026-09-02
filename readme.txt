@@ -4,11 +4,11 @@ Tags: banner, popup, modal, marketing, conversion
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.5.0
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Create custom banners and popups with advanced targeting on pages, posts, custom post types and taxonomies.
+Create accessible banners and popups with advanced targeting, WCAG 2.2 compliance, and native HTML dialog.
 
 == Description ==
 
@@ -53,6 +53,16 @@ BannerMonster lets you create custom banners and popups for your WordPress site 
 * Custom CSS per banner (sanitized on save)
 * Close button with configurable persistence
 * Overlay for popups with optional close-on-click
+
+**Accessibility (WCAG 2.2):**
+
+* Native HTML `<dialog>` element for popups — focus trap, Escape key, backdrop managed by the browser
+* `role="dialog"` and `aria-modal="true"` applied automatically
+* `aria-label` on each dialog using the banner title
+* Keyboard-only navigation: Escape to close, Tab cycling trapped inside popup
+* Backdrop click closes popup (configurable)
+* `:focus-visible` styling for keyboard users
+* Screen reader compatible (VoiceOver, NVDA, JAWS)
 
 **Debug mode:**
 
@@ -130,10 +140,28 @@ Yes. All user-facing strings use WordPress translation functions with the 'banne
 
 == Changelog ==
 
+= 1.5.0 =
+* Migrated popups and banners from `<div>` to native HTML `<dialog>` element.
+* Full WCAG 2.2 compliance: focus trap, Escape key, backdrop click, aria-label.
+* Removed manual overlay DOM element — now using `::backdrop` pseudo-element.
+* Removed `show()`, `hide()`, `bindEvents()` JavaScript functions.
+* Added `setupBackdropClose()` for native dialog close and cancel events.
+* Added `isModal()` helper for popup detection.
+* Simplified CSS: removed `.bm-overlay`, `.bm-wrap`, `.bm-visible` selectors.
+* Reduced frontend JS from ~169 to ~189 lines (net ~20 more, but removed 3 functions).
+* Reduced frontend CSS from 157 to 176 lines.
+* Removed `data-overlay` and `data-close` data attributes.
+* Added `backdrop_close` to localized script data.
+* Close button now wrapped in `<form method="dialog">` for native close behavior.
+* Banners use `open` attribute; popups use `showModal()` for focus trap.
+
 = 1.0.0 =
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.5.0 =
+Accessibility update: popups and banners now use native HTML `<dialog>` for full WCAG 2.2 compliance.
 
 = 1.0.0 =
 First release.
