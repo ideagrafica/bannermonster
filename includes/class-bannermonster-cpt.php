@@ -75,7 +75,7 @@ class BannerMonster_CPT {
 			'bm_text_color'         => get_post_meta( $post_id, 'bm_text_color', true ) ?: '#ffffff',
 			'bm_border_color'       => get_post_meta( $post_id, 'bm_border_color', true ),
 			'bm_border_width'       => (int) get_post_meta( $post_id, 'bm_border_width', true ),
-			'bm_padding'            => (int) ( get_post_meta( $post_id, 'bm_padding', true ) ?: 15 ),
+			'bm_padding'            => (int) ( get_post_meta( $post_id, 'bm_padding', true ) ?: 30 ),
 			'bm_font_size'          => (int) ( get_post_meta( $post_id, 'bm_font_size', true ) ?: 16 ),
 			'bm_css_class'          => get_post_meta( $post_id, 'bm_css_class', true ),
 			'bm_close_enabled'      => (int) get_post_meta( $post_id, 'bm_close_enabled', true ),
