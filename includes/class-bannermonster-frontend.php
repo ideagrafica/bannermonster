@@ -81,14 +81,12 @@ class BannerMonster_Frontend {
 			// box
 			printf( '<div class="%s" style="%s">', esc_attr( $box_cls ), esc_attr( $style ) );
 
-			// close button
-			if ( $m['bm_close_enabled'] ) {
-				printf(
-					'<button class="bm-x" data-id="%d" aria-label="%s">&times;</button>',
-					absint( $b->ID ),
-					esc_attr__( 'Chiudi', 'bannermonster' )
-				);
-			}
+			// close button — always rendered for WCAG 2.2 compliance
+			printf(
+				'<button class="bm-x" data-id="%d" aria-label="%s">&times;</button>',
+				absint( $b->ID ),
+				esc_attr__( 'Chiudi', 'bannermonster' )
+			);
 
 			// content
 			echo '<div class="bm-inner">' . wp_kses_post( $content ) . '</div>';
