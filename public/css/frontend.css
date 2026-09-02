@@ -7,7 +7,6 @@ dialog.bm-dialog {
   padding: 0 !important;
   border: none !important;
   background: transparent !important;
-  max-width: 90vw !important;
   z-index: 999999 !important;
   color: inherit;
 }
@@ -25,7 +24,9 @@ dialog.bm-dialog.bm-banner_top[open] {
   right: 0 !important;
   bottom: auto !important;
   width: 100% !important;
+  max-width: 100% !important;
   margin: 0 !important;
+  padding: 0 !important;
   transform: none !important;
 }
 
@@ -37,7 +38,9 @@ dialog.bm-dialog.bm-banner_bottom[open] {
   left: 0 !important;
   right: 0 !important;
   width: 100% !important;
+  max-width: 100% !important;
   margin: 0 !important;
+  padding: 0 !important;
   transform: none !important;
 }
 
@@ -125,6 +128,7 @@ dialog.bm-dialog.bm-popup_bottom_left .bm-box {
   transition: opacity .15s;
   z-index: 10;
   color: inherit;
+  display: block !important;
 }
 .bm-x:hover,
 .bm-x:focus {
@@ -134,8 +138,11 @@ dialog.bm-dialog.bm-popup_bottom_left .bm-box {
 }
 
 /* Form method="dialog" — invisible, serves accessibility only */
-.bm-x form[method="dialog"] {
-  display: contents;
+form[method="dialog"] {
+  display: contents !important;
+  position: static !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* --- Content --- */
