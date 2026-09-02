@@ -73,6 +73,7 @@ dialog.bm-dialog.bm-popup_center {
 
 dialog.bm-dialog.bm-popup_center .bm-box {
   margin: 0 auto;
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, .35);
 }
@@ -91,6 +92,7 @@ dialog.bm-dialog.bm-popup_bottom_right {
 }
 
 dialog.bm-dialog.bm-popup_bottom_right .bm-box {
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
 }
@@ -109,6 +111,7 @@ dialog.bm-dialog.bm-popup_bottom_left {
 }
 
 dialog.bm-dialog.bm-popup_bottom_left .bm-box {
+  padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 18px rgba(0, 0, 0, .25);
 }
