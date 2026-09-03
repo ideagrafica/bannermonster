@@ -1,5 +1,5 @@
 === BannerMonster ===
-Contributors: inCod, marcods
+Contributors: inCod, marcods, ideagrafica
 Tags: banner, popup, modal, marketing, conversion
 Requires at least: 5.8
 Tested up to: 7.1

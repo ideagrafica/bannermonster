@@ -18,6 +18,19 @@ class BannerMonster_Frontend {
 
 		wp_enqueue_style( 'bm-front', BANNERMONSTER_URL . 'public/css/frontend.css', array(), BANNERMONSTER_VERSION );
 
+		// Add custom CSS for each banner via wp_add_inline_style()
+		foreach ( $banners as $b ) {
+			$m = BannerMonster_CPT::get_meta( $b->ID );
+			if ( ! empty( $m['bm_custom_css'] ) ) {
+				$custom_css = sprintf(
+					'#bm-%d .bm-box{%s}',
+					absint( $b->ID ),
+					wp_strip_all_tags( $m['bm_custom_css'] )
+				);
+				wp_add_inline_style( 'bm-front', $custom_css );
+			}
+		}
+
 		$js_data = array();
 		foreach ( $banners as $b ) {
 			$m = BannerMonster_CPT::get_meta( $b->ID );
@@ -93,15 +106,6 @@ class BannerMonster_Frontend {
 
 			// close box and dialog
 			echo '</div></dialog>';
-
-			// custom CSS
-			if ( ! empty( $m['bm_custom_css'] ) ) {
-				printf(
-					'<style>#%s .bm-box{%s}</style>',
-					esc_attr( $id ),
-					esc_attr( wp_strip_all_tags( $m['bm_custom_css'] ) )
-				);
-			}
 		}
 	}
 
