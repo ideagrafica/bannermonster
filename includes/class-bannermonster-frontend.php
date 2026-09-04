@@ -16,41 +16,28 @@ class BannerMonster_Frontend {
 			return;
 		}
 
-		wp_enqueue_style( 'bm-front', BANNERMONSTER_URL . 'public/css/frontend.css', array(), BANNERMONSTER_VERSION );
-
-		// Add custom CSS for each banner via wp_add_inline_style()
-		foreach ( $banners as $b ) {
-			$m = BannerMonster_CPT::get_meta( $b->ID );
-			if ( ! empty( $m['bm_custom_css'] ) ) {
-				$custom_css = sprintf(
-					'#bm-%d .bm-box{%s}',
-					absint( $b->ID ),
-					wp_strip_all_tags( $m['bm_custom_css'] )
-				);
-				wp_add_inline_style( 'bm-front', $custom_css );
-			}
-		}
+		wp_enqueue_style( 'bannermonster-front', BANNERMONSTER_URL . 'public/css/frontend.css', array(), BANNERMONSTER_VERSION );
 
 		$js_data = array();
 		foreach ( $banners as $b ) {
 			$m = BannerMonster_CPT::get_meta( $b->ID );
 			$js_data[] = array(
 				'id'             => absint( $b->ID ),
-				'type'           => sanitize_text_field( $m['bm_type'] ),
-				'trigger'        => sanitize_text_field( $m['bm_trigger'] ),
-				'seconds'        => absint( $m['bm_trigger_seconds'] ),
-				'scroll'         => absint( $m['bm_trigger_scroll'] ),
-				'backdrop_close' => absint( $m['bm_close_on_click'] ),
-				'reappear'       => absint( $m['bm_reappear'] ),
+				'type'           => sanitize_text_field( $m['bannermonster_type'] ),
+				'trigger'        => sanitize_text_field( $m['bannermonster_trigger'] ),
+				'seconds'        => absint( $m['bannermonster_trigger_seconds'] ),
+				'scroll'         => absint( $m['bannermonster_trigger_scroll'] ),
+				'backdrop_close' => absint( $m['bannermonster_close_on_click'] ),
+				'reappear'       => absint( $m['bannermonster_reappear'] ),
 			);
 		}
 
-		wp_register_script( 'bm-front', BANNERMONSTER_URL . 'public/js/frontend.js', array(), BANNERMONSTER_VERSION, true );
-		wp_localize_script( 'bm-front', 'bmData', array(
+		wp_register_script( 'bannermonster-front', BANNERMONSTER_URL . 'public/js/frontend.js', array(), BANNERMONSTER_VERSION, true );
+		wp_localize_script( 'bannermonster-front', 'bannermonsterData', array(
 			'banners' => $js_data,
-			'debug'   => isset( $_GET['bm_debug'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bm_debug'] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			'debug'   => isset( $_GET['bannermonster_debug'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bannermonster_debug'] ) ), // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		) );
-		wp_enqueue_script( 'bm-front' );
+		wp_enqueue_script( 'bannermonster-front' );
 	}
 
 	public function render() {
@@ -61,13 +48,13 @@ class BannerMonster_Frontend {
 
 		foreach ( $banners as $b ) {
 			$m     = BannerMonster_CPT::get_meta( $b->ID );
-			$type  = sanitize_text_field( $m['bm_type'] );
+			$type  = sanitize_text_field( $m['bannermonster_type'] );
 			$content = apply_filters( 'the_content', $b->post_content ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound
-			$id    = 'bm-' . $b->ID;
+			$id    = 'bannermonster-' . $b->ID;
 
-			$box_cls  = 'bm-box';
-			if ( ! empty( $m['bm_css_class'] ) ) {
-				$box_cls .= ' ' . esc_attr( $m['bm_css_class'] );
+			$box_cls  = 'bannermonster-box';
+			if ( ! empty( $m['bannermonster_css_class'] ) ) {
+				$box_cls .= ' ' . esc_attr( $m['bannermonster_css_class'] );
 			}
 
 			$style = $this->build_styles( $m );
@@ -79,16 +66,16 @@ class BannerMonster_Frontend {
 
 			// Dialog wrapper
 			printf(
-				'<dialog id="%s" class="bm-dialog bm-%s" aria-label="%s"%s data-id="%d" data-trigger="%s" data-sec="%d" data-scr="%d" data-reappear="%d">',
+				'<dialog id="%s" class="bannermonster-dialog bannermonster-%s" aria-label="%s"%s data-id="%d" data-trigger="%s" data-sec="%d" data-scr="%d" data-reappear="%d">',
 				esc_attr( $id ),
 				esc_attr( $type ),
 				esc_attr( $aria_label ),
 				$is_popup ? '' : ' open',
 				absint( $b->ID ),
-				esc_attr( $m['bm_trigger'] ),
-				absint( $m['bm_trigger_seconds'] ),
-				absint( $m['bm_trigger_scroll'] ),
-				absint( $m['bm_reappear'] )
+				esc_attr( $m['bannermonster_trigger'] ),
+				absint( $m['bannermonster_trigger_seconds'] ),
+				absint( $m['bannermonster_trigger_scroll'] ),
+				absint( $m['bannermonster_reappear'] )
 			);
 
 			// box
@@ -96,13 +83,13 @@ class BannerMonster_Frontend {
 
 			// close button — always rendered for WCAG 2.2 compliance
 			printf(
-				'<button class="bm-x" data-id="%d" aria-label="%s">&times;</button>',
+				'<button class="bannermonster-x" data-id="%d" aria-label="%s">&times;</button>',
 				absint( $b->ID ),
 				esc_attr__( 'Chiudi', 'bannermonster' )
 			);
 
 			// content
-			echo '<div class="bm-inner">' . wp_kses_post( $content ) . '</div>';
+			echo '<div class="bannermonster-inner">' . wp_kses_post( $content ) . '</div>';
 
 			// close box and dialog
 			echo '</div></dialog>';
@@ -115,7 +102,7 @@ class BannerMonster_Frontend {
 
 		foreach ( $all as $b ) {
 			$m = BannerMonster_CPT::get_meta( $b->ID );
-			if ( ! $m['bm_enabled'] ) {
+			if ( ! $m['bannermonster_enabled'] ) {
 				continue;
 			}
 			if ( $this->should_show( $m ) ) {
@@ -127,7 +114,7 @@ class BannerMonster_Frontend {
 	}
 
 	private function should_show( $m ) {
-		switch ( $m['bm_display_where'] ) {
+		switch ( $m['bannermonster_display_where'] ) {
 			case 'all':
 				return true;
 			case 'posts':
@@ -135,15 +122,15 @@ class BannerMonster_Frontend {
 			case 'cpts':
 				return is_singular() && ! in_array( get_post_type(), array( 'post', 'page' ), true );
 			case 'specific_posts':
-				return is_single() && in_array( get_the_ID(), array_map( 'absint', $m['bm_show_on_posts'] ), true );
+				return is_single() && in_array( get_the_ID(), array_map( 'absint', $m['bannermonster_show_on_posts'] ), true );
 			case 'specific_pages':
-				return is_page() && in_array( get_the_ID(), array_map( 'absint', $m['bm_show_on_pages'] ), true );
+				return is_page() && in_array( get_the_ID(), array_map( 'absint', $m['bannermonster_show_on_pages'] ), true );
 			case 'specific_cpts':
-				return is_singular() && in_array( get_the_ID(), array_map( 'absint', $m['bm_show_on_cpts'] ), true );
+				return is_singular() && in_array( get_the_ID(), array_map( 'absint', $m['bannermonster_show_on_cpts'] ), true );
 			case 'urls':
-				return $this->match_urls( $m['bm_show_on_urls'] );
+				return $this->match_urls( $m['bannermonster_show_on_urls'] );
 			case 'taxonomies':
-				return $this->match_tax( $m['bm_show_on_taxonomies'] );
+				return $this->match_tax( $m['bannermonster_show_on_taxonomies'] );
 			default:
 				return false;
 		}
@@ -210,27 +197,27 @@ class BannerMonster_Frontend {
 
 	private function build_styles( $m ) {
 		$s = array();
-		if ( ! empty( $m['bm_bg_color'] ) ) {
-			$s[] = 'background-color:' . sanitize_hex_color( $m['bm_bg_color'] );
+		if ( ! empty( $m['bannermonster_bg_color'] ) ) {
+			$s[] = 'background-color:' . sanitize_hex_color( $m['bannermonster_bg_color'] );
 		}
-		if ( ! empty( $m['bm_text_color'] ) ) {
-			$s[] = 'color:' . sanitize_hex_color( $m['bm_text_color'] );
+		if ( ! empty( $m['bannermonster_text_color'] ) ) {
+			$s[] = 'color:' . sanitize_hex_color( $m['bannermonster_text_color'] );
 		}
-		if ( ! empty( $m['bm_border_color'] ) && $m['bm_border_width'] > 0 ) {
-			$s[] = 'border:' . absint( $m['bm_border_width'] ) . 'px solid ' . sanitize_hex_color( $m['bm_border_color'] );
+		if ( ! empty( $m['bannermonster_border_color'] ) && $m['bannermonster_border_width'] > 0 ) {
+			$s[] = 'border:' . absint( $m['bannermonster_border_width'] ) . 'px solid ' . sanitize_hex_color( $m['bannermonster_border_color'] );
 		}
-		if ( $m['bm_padding'] > 0 ) {
-			$s[] = 'padding:' . absint( $m['bm_padding'] ) . 'px';
+		if ( $m['bannermonster_padding'] > 0 ) {
+			$s[] = 'padding:' . absint( $m['bannermonster_padding'] ) . 'px';
 		}
-		if ( $m['bm_font_size'] > 0 ) {
-			$s[] = 'font-size:' . absint( $m['bm_font_size'] ) . 'px';
+		if ( $m['bannermonster_font_size'] > 0 ) {
+			$s[] = 'font-size:' . absint( $m['bannermonster_font_size'] ) . 'px';
 		}
-		$is_popup = strpos( $m['bm_type'], 'popup' ) !== false;
-		if ( $is_popup && $m['bm_width'] < 100 ) {
-			$s[] = 'width:' . absint( $m['bm_width'] ) . '%';
+		$is_popup = strpos( $m['bannermonster_type'], 'popup' ) !== false;
+		if ( $is_popup && $m['bannermonster_width'] < 100 ) {
+			$s[] = 'width:' . absint( $m['bannermonster_width'] ) . '%';
 		}
 		if ( $is_popup ) {
-			$s[] = 'max-width:' . absint( $m['bm_max_width'] ) . 'px';
+			$s[] = 'max-width:' . absint( $m['bannermonster_max_width'] ) . 'px';
 		}
 		return implode( ';', $s );
 	}

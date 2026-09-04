@@ -1,6 +1,6 @@
 /* BannerMonster - Admin */
-.bm-table th{width:180px;font-weight:600}
-.bm-table td select.bm-multi{width:100%;max-width:400px;min-height:80px}
-.bm-display-section{padding:12px;background:#f0f6fc;border-left:4px solid #0073aa;margin:12px 0}
-.bm-display-section h4{margin:0 0 8px;font-size:13px;color:#1d2327}
-.bm-trigger-opt td input{width:80px}
+.bannermonster-table th{width:180px;font-weight:600}
+.bannermonster-table td select.bannermonster-multi{width:100%;max-width:400px;min-height:80px}
+.bannermonster-display-section{padding:12px;background:#f0f6fc;border-left:4px solid #0073aa;margin:12px 0}
+.bannermonster-display-section h4{margin:0 0 8px;font-size:13px;color:#1d2327}
+.bannermonster-trigger-opt td input{width:80px}

@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class BannerMonster_CPT {
 
-	const POST_TYPE = 'bm_banner';
+	const POST_TYPE = 'bannermonster_banner';
 
 	private static $meta_cache = array();
 
@@ -45,7 +45,7 @@ class BannerMonster_CPT {
 	}
 
 	public static function get_all_banners() {
-		$cache_key = 'bm_all_banners';
+		$cache_key = 'bannermonster_all_banners';
 		$cached = wp_cache_get( $cache_key, 'bannermonster' );
 		if ( false !== $cached ) {
 			return $cached;
@@ -69,31 +69,30 @@ class BannerMonster_CPT {
 		}
 
 		$meta = array(
-			'bm_type'               => get_post_meta( $post_id, 'bm_type', true ) ?: 'banner_top',
-			'bm_enabled'            => (int) get_post_meta( $post_id, 'bm_enabled', true ),
-			'bm_bg_color'           => get_post_meta( $post_id, 'bm_bg_color', true ) ?: '#0073aa',
-			'bm_text_color'         => get_post_meta( $post_id, 'bm_text_color', true ) ?: '#ffffff',
-			'bm_border_color'       => get_post_meta( $post_id, 'bm_border_color', true ),
-			'bm_border_width'       => (int) get_post_meta( $post_id, 'bm_border_width', true ),
-			'bm_padding'            => (int) ( get_post_meta( $post_id, 'bm_padding', true ) ?: 30 ),
-			'bm_font_size'          => (int) ( get_post_meta( $post_id, 'bm_font_size', true ) ?: 16 ),
-			'bm_css_class'          => get_post_meta( $post_id, 'bm_css_class', true ),
-			'bm_close_enabled'      => (int) get_post_meta( $post_id, 'bm_close_enabled', true ),
-			'bm_trigger'            => get_post_meta( $post_id, 'bm_trigger', true ) ?: 'immediate',
-			'bm_trigger_seconds'    => (int) ( get_post_meta( $post_id, 'bm_trigger_seconds', true ) ?: 5 ),
-			'bm_trigger_scroll'     => (int) ( get_post_meta( $post_id, 'bm_trigger_scroll', true ) ?: 50 ),
-			'bm_display_where'      => get_post_meta( $post_id, 'bm_display_where', true ) ?: 'all',
-			'bm_show_on_pages'      => (array) get_post_meta( $post_id, 'bm_show_on_pages', true ),
-			'bm_show_on_posts'      => (array) get_post_meta( $post_id, 'bm_show_on_posts', true ),
-			'bm_show_on_cpts'       => (array) get_post_meta( $post_id, 'bm_show_on_cpts', true ),
-			'bm_show_on_urls'       => get_post_meta( $post_id, 'bm_show_on_urls', true ),
-			'bm_show_on_taxonomies' => (array) get_post_meta( $post_id, 'bm_show_on_taxonomies', true ),
-			'bm_close_on_click'     => (int) get_post_meta( $post_id, 'bm_close_on_click', true ),
-			'bm_overlay'            => (int) get_post_meta( $post_id, 'bm_overlay', true ),
-			'bm_width'              => (int) ( get_post_meta( $post_id, 'bm_width', true ) ?: 100 ),
-			'bm_max_width'          => (int) ( get_post_meta( $post_id, 'bm_max_width', true ) ?: 600 ),
-			'bm_reappear'           => (int) get_post_meta( $post_id, 'bm_reappear', true ),
-			'bm_custom_css'         => get_post_meta( $post_id, 'bm_custom_css', true ),
+			'bannermonster_type'               => get_post_meta( $post_id, 'bannermonster_type', true ) ?: 'banner_top',
+			'bannermonster_enabled'            => (int) get_post_meta( $post_id, 'bannermonster_enabled', true ),
+			'bannermonster_bg_color'           => get_post_meta( $post_id, 'bannermonster_bg_color', true ) ?: '#0073aa',
+			'bannermonster_text_color'         => get_post_meta( $post_id, 'bannermonster_text_color', true ) ?: '#ffffff',
+			'bannermonster_border_color'       => get_post_meta( $post_id, 'bannermonster_border_color', true ),
+			'bannermonster_border_width'       => (int) get_post_meta( $post_id, 'bannermonster_border_width', true ),
+			'bannermonster_padding'            => (int) ( get_post_meta( $post_id, 'bannermonster_padding', true ) ?: 30 ),
+			'bannermonster_font_size'          => (int) ( get_post_meta( $post_id, 'bannermonster_font_size', true ) ?: 16 ),
+			'bannermonster_css_class'          => get_post_meta( $post_id, 'bannermonster_css_class', true ),
+			'bannermonster_close_enabled'      => (int) get_post_meta( $post_id, 'bannermonster_close_enabled', true ),
+			'bannermonster_trigger'            => get_post_meta( $post_id, 'bannermonster_trigger', true ) ?: 'immediate',
+			'bannermonster_trigger_seconds'    => (int) ( get_post_meta( $post_id, 'bannermonster_trigger_seconds', true ) ?: 5 ),
+			'bannermonster_trigger_scroll'     => (int) ( get_post_meta( $post_id, 'bannermonster_trigger_scroll', true ) ?: 50 ),
+			'bannermonster_display_where'      => get_post_meta( $post_id, 'bannermonster_display_where', true ) ?: 'all',
+			'bannermonster_show_on_pages'      => (array) get_post_meta( $post_id, 'bannermonster_show_on_pages', true ),
+			'bannermonster_show_on_posts'      => (array) get_post_meta( $post_id, 'bannermonster_show_on_posts', true ),
+			'bannermonster_show_on_cpts'       => (array) get_post_meta( $post_id, 'bannermonster_show_on_cpts', true ),
+			'bannermonster_show_on_urls'       => get_post_meta( $post_id, 'bannermonster_show_on_urls', true ),
+			'bannermonster_show_on_taxonomies' => (array) get_post_meta( $post_id, 'bannermonster_show_on_taxonomies', true ),
+			'bannermonster_close_on_click'     => (int) get_post_meta( $post_id, 'bannermonster_close_on_click', true ),
+			'bannermonster_overlay'            => (int) get_post_meta( $post_id, 'bannermonster_overlay', true ),
+			'bannermonster_width'              => (int) ( get_post_meta( $post_id, 'bannermonster_width', true ) ?: 100 ),
+			'bannermonster_max_width'          => (int) ( get_post_meta( $post_id, 'bannermonster_max_width', true ) ?: 600 ),
+			'bannermonster_reappear'           => (int) get_post_meta( $post_id, 'bannermonster_reappear', true ),
 		);
 
 		self::$meta_cache[ $post_id ] = $meta;
@@ -101,7 +100,7 @@ class BannerMonster_CPT {
 	}
 
 	public static function clear_cache() {
-		wp_cache_delete( 'bm_all_banners', 'bannermonster' );
+		wp_cache_delete( 'bannermonster_all_banners', 'bannermonster' );
 		self::$meta_cache = array();
 	}
 }

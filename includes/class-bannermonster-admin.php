@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class BannerMonster_Admin {
 
-	const NONCE = 'bm_save_metabox';
+	const NONCE = 'bannermonster_save_metabox';
 
 	public function __construct() {
 		add_action( 'add_meta_boxes', array( $this, 'register_metaboxes' ) );
@@ -24,60 +24,60 @@ class BannerMonster_Admin {
 		wp_enqueue_style( 'wp-color-picker' );
 		wp_enqueue_script( 'wp-color-picker' );
 
-		wp_enqueue_style( 'bm-admin', BANNERMONSTER_URL . 'admin/css/admin.css', array(), BANNERMONSTER_VERSION );
-		wp_enqueue_script( 'bm-admin', BANNERMONSTER_URL . 'admin/js/admin.js', array( 'jquery' ), BANNERMONSTER_VERSION, true );
+		wp_enqueue_style( 'bannermonster-admin', BANNERMONSTER_URL . 'admin/css/admin.css', array(), BANNERMONSTER_VERSION );
+		wp_enqueue_script( 'bannermonster-admin', BANNERMONSTER_URL . 'admin/js/admin.js', array( 'jquery' ), BANNERMONSTER_VERSION, true );
 	}
 
 	public function register_metaboxes() {
-		add_meta_box( 'bm_type', __( 'Tipo & Configurazione', 'bannermonster' ), array( $this, 'box_type' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
-		add_meta_box( 'bm_display', __( 'Regole di Visualizzazione', 'bannermonster' ), array( $this, 'box_display' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
-		add_meta_box( 'bm_trigger', __( 'Trigger', 'bannermonster' ), array( $this, 'box_trigger' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
-		add_meta_box( 'bm_style', __( 'Stile & Personalizzazione', 'bannermonster' ), array( $this, 'box_style' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
-		add_meta_box( 'bm_debug', __( 'Debug & Controllo', 'bannermonster' ), array( $this, 'box_debug' ), BannerMonster_CPT::POST_TYPE, 'normal', 'default' );
+		add_meta_box( 'bannermonster_type', __( 'Tipo & Configurazione', 'bannermonster' ), array( $this, 'box_type' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
+		add_meta_box( 'bannermonster_display', __( 'Regole di Visualizzazione', 'bannermonster' ), array( $this, 'box_display' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
+		add_meta_box( 'bannermonster_trigger', __( 'Trigger', 'bannermonster' ), array( $this, 'box_trigger' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
+		add_meta_box( 'bannermonster_style', __( 'Stile & Personalizzazione', 'bannermonster' ), array( $this, 'box_style' ), BannerMonster_CPT::POST_TYPE, 'normal', 'high' );
+		add_meta_box( 'bannermonster_debug', __( 'Debug & Controllo', 'bannermonster' ), array( $this, 'box_debug' ), BannerMonster_CPT::POST_TYPE, 'normal', 'default' );
 	}
 
 	/* ---- Metabox: Tipo ---- */
 
 	public function box_type( $post ) {
-		wp_nonce_field( self::NONCE, 'bm_nonce' );
+		wp_nonce_field( self::NONCE, 'bannermonster_nonce' );
 		$m = BannerMonster_CPT::get_meta( $post->ID );
 		?>
-		<table class="form-table bm-table">
+		<table class="form-table bannermonster-table">
 			<tr>
-				<th><label for="bm_type"><?php esc_html_e( 'Tipo di elemento', 'bannermonster' ); ?></label></th>
+				<th><label for="bannermonster_type"><?php esc_html_e( 'Tipo di elemento', 'bannermonster' ); ?></label></th>
 				<td>
-					<select name="bm_type" id="bm_type">
+					<select name="bannermonster_type" id="bannermonster_type">
 						<optgroup label="<?php esc_attr_e( 'Banner', 'bannermonster' ); ?>">
-							<option value="banner_top" <?php selected( $m['bm_type'], 'banner_top' ); ?>><?php esc_html_e( 'Barra in alto (fissa)', 'bannermonster' ); ?></option>
-							<option value="banner_bottom" <?php selected( $m['bm_type'], 'banner_bottom' ); ?>><?php esc_html_e( 'Barra in basso (fissa)', 'bannermonster' ); ?></option>
+							<option value="banner_top" <?php selected( $m['bannermonster_type'], 'banner_top' ); ?>><?php esc_html_e( 'Barra in alto (fissa)', 'bannermonster' ); ?></option>
+							<option value="banner_bottom" <?php selected( $m['bannermonster_type'], 'banner_bottom' ); ?>><?php esc_html_e( 'Barra in basso (fissa)', 'bannermonster' ); ?></option>
 						</optgroup>
 						<optgroup label="<?php esc_attr_e( 'Popup', 'bannermonster' ); ?>">
-							<option value="popup_center" <?php selected( $m['bm_type'], 'popup_center' ); ?>><?php esc_html_e( 'Centrale', 'bannermonster' ); ?></option>
-							<option value="popup_bottom_right" <?php selected( $m['bm_type'], 'popup_bottom_right' ); ?>><?php esc_html_e( 'Basso a destra', 'bannermonster' ); ?></option>
-							<option value="popup_bottom_left" <?php selected( $m['bm_type'], 'popup_bottom_left' ); ?>><?php esc_html_e( 'Basso a sinistra', 'bannermonster' ); ?></option>
+							<option value="popup_center" <?php selected( $m['bannermonster_type'], 'popup_center' ); ?>><?php esc_html_e( 'Centrale', 'bannermonster' ); ?></option>
+							<option value="popup_bottom_right" <?php selected( $m['bannermonster_type'], 'popup_bottom_right' ); ?>><?php esc_html_e( 'Basso a destra', 'bannermonster' ); ?></option>
+							<option value="popup_bottom_left" <?php selected( $m['bannermonster_type'], 'popup_bottom_left' ); ?>><?php esc_html_e( 'Basso a sinistra', 'bannermonster' ); ?></option>
 						</optgroup>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<th><?php esc_html_e( 'Stato', 'bannermonster' ); ?></th>
-				<td><label><input type="checkbox" name="bm_enabled" value="1" <?php checked( $m['bm_enabled'], 1 ); ?>> <?php esc_html_e( 'Attivo', 'bannermonster' ); ?></label></td>
+				<td><label><input type="checkbox" name="bannermonster_enabled" value="1" <?php checked( $m['bannermonster_enabled'], 1 ); ?>> <?php esc_html_e( 'Attivo', 'bannermonster' ); ?></label></td>
 			</tr>
 			<tr>
 				<th><?php esc_html_e( 'Overlay (popup)', 'bannermonster' ); ?></th>
-				<td><label><input type="checkbox" name="bm_overlay" value="1" <?php checked( $m['bm_overlay'], 1 ); ?>> <?php esc_html_e( 'Mostra overlay scuro', 'bannermonster' ); ?></label></td>
+				<td><label><input type="checkbox" name="bannermonster_overlay" value="1" <?php checked( $m['bannermonster_overlay'], 1 ); ?>> <?php esc_html_e( 'Mostra overlay scuro', 'bannermonster' ); ?></label></td>
 			</tr>
 			<tr>
 				<th><?php esc_html_e( 'Chiudi su overlay', 'bannermonster' ); ?></th>
-				<td><label><input type="checkbox" name="bm_close_on_click" value="1" <?php checked( $m['bm_close_on_click'], 1 ); ?>> <?php esc_html_e( 'Chiudi cliccando fuori', 'bannermonster' ); ?></label></td>
+				<td><label><input type="checkbox" name="bannermonster_close_on_click" value="1" <?php checked( $m['bannermonster_close_on_click'], 1 ); ?>> <?php esc_html_e( 'Chiudi cliccando fuori', 'bannermonster' ); ?></label></td>
 			</tr>
 			<tr>
-				<th><label for="bm_width"><?php esc_html_e( 'Larghezza (%)', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_width" id="bm_width" value="<?php echo esc_attr( $m['bm_width'] ); ?>" min="10" max="100" class="small-text"></td>
+				<th><label for="bannermonster_width"><?php esc_html_e( 'Larghezza (%)', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_width" id="bannermonster_width" value="<?php echo esc_attr( $m['bannermonster_width'] ); ?>" min="10" max="100" class="small-text"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_max_width"><?php esc_html_e( 'Max width (px)', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_max_width" id="bm_max_width" value="<?php echo esc_attr( $m['bm_max_width'] ); ?>" min="200" max="1200" class="small-text"></td>
+				<th><label for="bannermonster_max_width"><?php esc_html_e( 'Max width (px)', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_max_width" id="bannermonster_max_width" value="<?php echo esc_attr( $m['bannermonster_max_width'] ); ?>" min="200" max="1200" class="small-text"></td>
 			</tr>
 		</table>
 		<?php
@@ -87,13 +87,13 @@ class BannerMonster_Admin {
 
 	public function box_display( $post ) {
 		$m = BannerMonster_CPT::get_meta( $post->ID );
-		$where = $m['bm_display_where'];
+		$where = $m['bannermonster_display_where'];
 		?>
-		<table class="form-table bm-table">
+		<table class="form-table bannermonster-table">
 			<tr>
-				<th><label for="bm_display_where"><?php esc_html_e( 'Dove visualizzare', 'bannermonster' ); ?></label></th>
+				<th><label for="bannermonster_display_where"><?php esc_html_e( 'Dove visualizzare', 'bannermonster' ); ?></label></th>
 				<td>
-					<select name="bm_display_where" id="bm_display_where">
+					<select name="bannermonster_display_where" id="bannermonster_display_where">
 						<option value="all" <?php selected( $where, 'all' ); ?>><?php esc_html_e( 'Tutte le pagine', 'bannermonster' ); ?></option>
 						<option value="posts" <?php selected( $where, 'posts' ); ?>><?php esc_html_e( 'Tutti i post', 'bannermonster' ); ?></option>
 						<option value="cpts" <?php selected( $where, 'cpts' ); ?>><?php esc_html_e( 'Tutti i Custom Post Type', 'bannermonster' ); ?></option>
@@ -108,34 +108,34 @@ class BannerMonster_Admin {
 		</table>
 
 		<?php /* Pagine */ ?>
-		<div class="bm-display-section" data-show="specific_pages" <?php echo esc_attr( $where === 'specific_pages' ? '' : 'style="display:none"' ); ?>>
+		<div class="bannermonster-display-section" data-show="specific_pages" <?php echo esc_attr( $where === 'specific_pages' ? '' : 'style="display:none"' ); ?>>
 			<h4><?php esc_html_e( 'Seleziona pagine', 'bannermonster' ); ?></h4>
-			<?php $this->picker_pages( $m['bm_show_on_pages'] ); ?>
+			<?php $this->picker_pages( $m['bannermonster_show_on_pages'] ); ?>
 		</div>
 
 		<?php /* Post */ ?>
-		<div class="bm-display-section" data-show="specific_posts" <?php echo esc_attr( $where === 'specific_posts' ? '' : 'style="display:none"' ); ?>>
+		<div class="bannermonster-display-section" data-show="specific_posts" <?php echo esc_attr( $where === 'specific_posts' ? '' : 'style="display:none"' ); ?>>
 			<h4><?php esc_html_e( 'Seleziona post', 'bannermonster' ); ?></h4>
-			<?php $this->picker_posts( $m['bm_show_on_posts'] ); ?>
+			<?php $this->picker_posts( $m['bannermonster_show_on_posts'] ); ?>
 		</div>
 
 		<?php /* CPT */ ?>
-		<div class="bm-display-section" data-show="specific_cpts" <?php echo esc_attr( $where === 'specific_cpts' ? '' : 'style="display:none"' ); ?>>
+		<div class="bannermonster-display-section" data-show="specific_cpts" <?php echo esc_attr( $where === 'specific_cpts' ? '' : 'style="display:none"' ); ?>>
 			<h4><?php esc_html_e( 'Seleziona CPT', 'bannermonster' ); ?></h4>
-			<?php $this->picker_cpts( $m['bm_show_on_cpts'] ); ?>
+			<?php $this->picker_cpts( $m['bannermonster_show_on_cpts'] ); ?>
 		</div>
 
 		<?php /* URL */ ?>
-		<div class="bm-display-section" data-show="urls" <?php echo esc_attr( $where === 'urls' ? '' : 'style="display:none"' ); ?>>
+		<div class="bannermonster-display-section" data-show="urls" <?php echo esc_attr( $where === 'urls' ? '' : 'style="display:none"' ); ?>>
 			<h4><?php esc_html_e( 'URL (una per riga)', 'bannermonster' ); ?></h4>
-			<textarea name="bm_show_on_urls" class="large-text" rows="4" placeholder="https://example.com/pagina"><?php echo esc_textarea( $m['bm_show_on_urls'] ); ?></textarea>
+			<textarea name="bannermonster_show_on_urls" class="large-text" rows="4" placeholder="https://example.com/pagina"><?php echo esc_textarea( $m['bannermonster_show_on_urls'] ); ?></textarea>
 			<p class="description"><?php esc_html_e('Confronto parziale: basta che l\'URL contenga la stringa inserita.', 'bannermonster'); ?></p>
 		</div>
 
 		<?php /* Tassonomie */ ?>
-		<div class="bm-display-section" data-show="taxonomies" <?php echo esc_attr( $where === 'taxonomies' ? '' : 'style="display:none"' ); ?>>
+		<div class="bannermonster-display-section" data-show="taxonomies" <?php echo esc_attr( $where === 'taxonomies' ? '' : 'style="display:none"' ); ?>>
 			<h4><?php esc_html_e( 'Seleziona tassonomie', 'bannermonster' ); ?></h4>
-			<?php $this->picker_taxonomies( $m['bm_show_on_taxonomies'] ); ?>
+			<?php $this->picker_taxonomies( $m['bannermonster_show_on_taxonomies'] ); ?>
 		</div>
 		<?php
 	}
@@ -144,17 +144,17 @@ class BannerMonster_Admin {
 
 	public function box_trigger( $post ) {
 		$m = BannerMonster_CPT::get_meta( $post->ID );
-		$trigger = $m['bm_trigger'];
-		$debug_active = isset( $_GET['bm_debug'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bm_debug'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$trigger = $m['bannermonster_trigger'];
+		$debug_active = isset( $_GET['bannermonster_debug'] ) && '1' === sanitize_text_field( wp_unslash( $_GET['bannermonster_debug'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		?>
 		<?php if ( $debug_active ) : ?>
 			<div class="notice notice-warning inline" style="margin:10px 0"><p><strong>BannerMonster Debug:</strong> <?php esc_html_e( 'Modalità debug attiva - il cookie di chiusura viene ignorato.', 'bannermonster' ); ?></p></div>
 		<?php endif; ?>
-		<table class="form-table bm-table">
+		<table class="form-table bannermonster-table">
 			<tr>
-				<th><label for="bm_trigger"><?php esc_html_e( 'Tipo di trigger', 'bannermonster' ); ?></label></th>
+				<th><label for="bannermonster_trigger"><?php esc_html_e( 'Tipo di trigger', 'bannermonster' ); ?></label></th>
 				<td>
-					<select name="bm_trigger" id="bm_trigger">
+					<select name="bannermonster_trigger" id="bannermonster_trigger">
 						<option value="immediate" <?php selected( $trigger, 'immediate' ); ?>><?php esc_html_e( 'Immediato', 'bannermonster' ); ?></option>
 						<option value="timer" <?php selected( $trigger, 'timer' ); ?>><?php esc_html_e( 'Dopo X secondi', 'bannermonster' ); ?></option>
 						<option value="exit_intent" <?php selected( $trigger, 'exit_intent' ); ?>><?php esc_html_e( 'Intento di chiusura scheda', 'bannermonster' ); ?></option>
@@ -162,18 +162,18 @@ class BannerMonster_Admin {
 					</select>
 				</td>
 			</tr>
-			<tr class="bm-trigger-opt" data-trigger="timer" <?php echo esc_attr( $trigger === 'timer' ? '' : 'style="display:none"' ); ?>>
-				<th><label for="bm_trigger_seconds"><?php esc_html_e( 'Secondi', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_trigger_seconds" id="bm_trigger_seconds" value="<?php echo esc_attr( $m['bm_trigger_seconds'] ); ?>" min="1" max="300" class="small-text"></td>
+			<tr class="bannermonster-trigger-opt" data-trigger="timer" <?php echo esc_attr( $trigger === 'timer' ? '' : 'style="display:none"' ); ?>>
+				<th><label for="bannermonster_trigger_seconds"><?php esc_html_e( 'Secondi', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_trigger_seconds" id="bannermonster_trigger_seconds" value="<?php echo esc_attr( $m['bannermonster_trigger_seconds'] ); ?>" min="1" max="300" class="small-text"></td>
 			</tr>
-			<tr class="bm-trigger-opt" data-trigger="scroll" <?php echo esc_attr( $trigger === 'scroll' ? '' : 'style="display:none"' ); ?>>
-				<th><label for="bm_trigger_scroll"><?php esc_html_e( 'Percentuale scroll', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_trigger_scroll" id="bm_trigger_scroll" value="<?php echo esc_attr( $m['bm_trigger_scroll'] ); ?>" min="1" max="100" class="small-text"> %</td>
+			<tr class="bannermonster-trigger-opt" data-trigger="scroll" <?php echo esc_attr( $trigger === 'scroll' ? '' : 'style="display:none"' ); ?>>
+				<th><label for="bannermonster_trigger_scroll"><?php esc_html_e( 'Percentuale scroll', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_trigger_scroll" id="bannermonster_trigger_scroll" value="<?php echo esc_attr( $m['bannermonster_trigger_scroll'] ); ?>" min="1" max="100" class="small-text"> %</td>
 			</tr>
 			<tr>
-				<th><label for="bm_reappear"><?php esc_html_e( 'Ricompari dopo (min)', 'bannermonster' ); ?></label></th>
+				<th><label for="bannermonster_reappear"><?php esc_html_e( 'Ricompari dopo (min)', 'bannermonster' ); ?></label></th>
 				<td>
-					<input type="number" name="bm_reappear" id="bm_reappear" value="<?php echo esc_attr( $m['bm_reappear'] ); ?>" min="0" max="525600" class="small-text">
+					<input type="number" name="bannermonster_reappear" id="bannermonster_reappear" value="<?php echo esc_attr( $m['bannermonster_reappear'] ); ?>" min="0" max="525600" class="small-text">
 					<p class="description"><?php esc_html_e( 'Minuti prima che il banner ricompaia dopo la chiusura. 0 = non ricomparire mai più.', 'bannermonster' ); ?></p>
 				</td>
 			</tr>
@@ -186,42 +186,38 @@ class BannerMonster_Admin {
 	public function box_style( $post ) {
 		$m = BannerMonster_CPT::get_meta( $post->ID );
 		?>
-		<table class="form-table bm-table">
+		<table class="form-table bannermonster-table">
 			<tr>
-				<th><label for="bm_bg_color"><?php esc_html_e( 'Sfondo', 'bannermonster' ); ?></label></th>
-				<td><input type="text" name="bm_bg_color" id="bm_bg_color" value="<?php echo esc_attr( $m['bm_bg_color'] ); ?>" class="bm-color"></td>
+				<th><label for="bannermonster_bg_color"><?php esc_html_e( 'Sfondo', 'bannermonster' ); ?></label></th>
+				<td><input type="text" name="bannermonster_bg_color" id="bannermonster_bg_color" value="<?php echo esc_attr( $m['bannermonster_bg_color'] ); ?>" class="bannermonster-color"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_text_color"><?php esc_html_e( 'Testo', 'bannermonster' ); ?></label></th>
-				<td><input type="text" name="bm_text_color" id="bm_text_color" value="<?php echo esc_attr( $m['bm_text_color'] ); ?>" class="bm-color"></td>
+				<th><label for="bannermonster_text_color"><?php esc_html_e( 'Testo', 'bannermonster' ); ?></label></th>
+				<td><input type="text" name="bannermonster_text_color" id="bannermonster_text_color" value="<?php echo esc_attr( $m['bannermonster_text_color'] ); ?>" class="bannermonster-color"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_border_color"><?php esc_html_e( 'Bordo', 'bannermonster' ); ?></label></th>
-				<td><input type="text" name="bm_border_color" id="bm_border_color" value="<?php echo esc_attr( $m['bm_border_color'] ); ?>" class="bm-color"></td>
+				<th><label for="bannermonster_border_color"><?php esc_html_e( 'Bordo', 'bannermonster' ); ?></label></th>
+				<td><input type="text" name="bannermonster_border_color" id="bannermonster_border_color" value="<?php echo esc_attr( $m['bannermonster_border_color'] ); ?>" class="bannermonster-color"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_border_width"><?php esc_html_e( 'Spessore bordo (px)', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_border_width" id="bm_border_width" value="<?php echo esc_attr( $m['bm_border_width'] ); ?>" min="0" max="20" class="small-text"></td>
+				<th><label for="bannermonster_border_width"><?php esc_html_e( 'Spessore bordo (px)', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_border_width" id="bannermonster_border_width" value="<?php echo esc_attr( $m['bannermonster_border_width'] ); ?>" min="0" max="20" class="small-text"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_padding"><?php esc_html_e( 'Padding (px)', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_padding" id="bm_padding" value="<?php echo esc_attr( $m['bm_padding'] ); ?>" min="0" max="100" class="small-text"></td>
+				<th><label for="bannermonster_padding"><?php esc_html_e( 'Padding (px)', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_padding" id="bannermonster_padding" value="<?php echo esc_attr( $m['bannermonster_padding'] ); ?>" min="0" max="100" class="small-text"></td>
 			</tr>
 			<tr>
-				<th><label for="bm_font_size"><?php esc_html_e( 'Font size (px)', 'bannermonster' ); ?></label></th>
-				<td><input type="number" name="bm_font_size" id="bm_font_size" value="<?php echo esc_attr( $m['bm_font_size'] ); ?>" min="10" max="48" class="small-text"></td>
+				<th><label for="bannermonster_font_size"><?php esc_html_e( 'Font size (px)', 'bannermonster' ); ?></label></th>
+				<td><input type="number" name="bannermonster_font_size" id="bannermonster_font_size" value="<?php echo esc_attr( $m['bannermonster_font_size'] ); ?>" min="10" max="48" class="small-text"></td>
 			</tr>
 			<tr>
 				<th><?php esc_html_e( 'Pulsante X', 'bannermonster' ); ?></th>
-				<td><label><input type="checkbox" name="bm_close_enabled" value="1" <?php checked( $m['bm_close_enabled'], 1 ); ?>> <?php esc_html_e( 'Mostra pulsante di chiusura', 'bannermonster' ); ?></label></td>
+				<td><label><input type="checkbox" name="bannermonster_close_enabled" value="1" <?php checked( $m['bannermonster_close_enabled'], 1 ); ?>> <?php esc_html_e( 'Mostra pulsante di chiusura', 'bannermonster' ); ?></label></td>
 			</tr>
 			<tr>
-				<th><label for="bm_css_class"><?php esc_html_e( 'Classi CSS', 'bannermonster' ); ?></label></th>
-				<td><input type="text" name="bm_css_class" id="bm_css_class" value="<?php echo esc_attr( $m['bm_css_class'] ); ?>" class="regular-text"></td>
-			</tr>
-			<tr>
-				<th><label for="bm_custom_css"><?php esc_html_e( 'CSS personalizzato', 'bannermonster' ); ?></label></th>
-				<td><textarea name="bm_custom_css" id="bm_custom_css" class="large-text code" rows="4"><?php echo esc_textarea( $m['bm_custom_css'] ); ?></textarea></td>
+				<th><label for="bannermonster_css_class"><?php esc_html_e( 'Classi CSS', 'bannermonster' ); ?></label></th>
+				<td><input type="text" name="bannermonster_css_class" id="bannermonster_css_class" value="<?php echo esc_attr( $m['bannermonster_css_class'] ); ?>" class="regular-text"></td>
 			</tr>
 		</table>
 		<?php
@@ -236,12 +232,12 @@ class BannerMonster_Admin {
 			<h4 style="margin-top:0"><?php esc_html_e( 'Modalit&agrave; Debug', 'bannermonster' ); ?></h4>
 			<p><?php esc_html_e( 'Il mode debug ti permette di testare i banner ignorando il localStorage del browser. Quando attivo, tutti i banner vengono mostrati ad ogni caricamento pagina, indipendentemente dal fatto che siano stati chiusi in precedenza.', 'bannermonster' ); ?></p>
 
-			<table class="form-table bm-table">
+			<table class="form-table bannermonster-table">
 				<tr>
 					<th style="width:180px"><?php esc_html_e( 'URL di test', 'bannermonster' ); ?></th>
 					<td>
 						<code style="background:#f1f1f1; padding:6px 12px; border-radius:4px; display:inline-block; word-break:break-all; font-size:13px;">
-							<?php echo esc_html( $site_url ); ?>/?bm_debug=1
+							<?php echo esc_html( $site_url ); ?>/?bannermonster_debug=1
 						</code>
 						<p class="description" style="margin-top:6px;"><?php esc_html_e( 'Aggiungi questo parametro a qualsiasi URL del tuo sito per attivare il debug.', 'bannermonster' ); ?></p>
 					</td>
@@ -250,7 +246,7 @@ class BannerMonster_Admin {
 
 			<h4><?php esc_html_e( 'Come funziona', 'bannermonster' ); ?></h4>
 			<ol style="line-height:2; padding-left:20px; color:#555;">
-				<li><?php esc_html_e( 'Aggiungi <code>?bm_debug=1</code> alla fine di qualsiasi URL.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Aggiungi <code>?bannermonster_debug=1</code> alla fine di qualsiasi URL.', 'bannermonster' ); ?></li>
 				<li><?php esc_html_e( 'Tutti i banner attivi appariranno ad ogni caricamento pagina.', 'bannermonster' ); ?></li>
 				<li><?php esc_html_e( 'Il localStorage viene ignorato: anche se il visitatore ha chiuso il banner, questo ricomparir&agrave;.', 'bannermonster' ); ?></li>
 				<li><?php esc_html_e( 'Nell\'admin metabox comparir&agrave; un avviso giallo che indica che la modalit&agrave; debug &egrave; attiva.', 'bannermonster' ); ?></li>
@@ -261,9 +257,9 @@ class BannerMonster_Admin {
 
 			<h4 style="margin-top:24px"><?php esc_html_e( 'Note tecniche', 'bannermonster' ); ?></h4>
 			<ul style="line-height:2; padding-left:20px; color:#555;">
-				<li><?php esc_html_e( 'Lo stato di chiusura viene salvato nel <code>localStorage</code> del browser con chiave <code>bm_closed</code>.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Lo stato di chiusura viene salvato nel <code>localStorage</code> del browser con chiave <code>bannermonster_closed</code>.', 'bannermonster' ); ?></li>
 				<li><?php esc_html_e( 'Il formato &egrave; un oggetto JSON: <code>{"ID": timestamp, ...}</code>.', 'bannermonster' ); ?></li>
-				<li><?php esc_html_e( 'Il parametro <code>?bm_debug=1</code> viene passato al frontend via <code>wp_localize_script</code>.', 'bannermonster' ); ?></li>
+				<li><?php esc_html_e( 'Il parametro <code>?bannermonster_debug=1</code> viene passato al frontend via <code>wp_localize_script</code>.', 'bannermonster' ); ?></li>
 				<li><?php esc_html_e( 'Nessun cookie viene utilizzato: tutto il sistema si basa su localStorage.', 'bannermonster' ); ?></li>
 			</ul>
 		</div>
@@ -273,7 +269,7 @@ class BannerMonster_Admin {
 	/* ---- Save ---- */
 
 	public function save( $post_id, $post ) {
-		$raw_nonce = isset( $_POST['bm_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['bm_nonce'] ) ) : '';
+		$raw_nonce = isset( $_POST['bannermonster_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['bannermonster_nonce'] ) ) : '';
 		if ( ! $raw_nonce || ! wp_verify_nonce( $raw_nonce, self::NONCE ) ) {
 			return;
 		}
@@ -297,43 +293,43 @@ class BannerMonster_Admin {
 		};
 
 		// Tipo
-		$type = $sanitize( 'bm_type' );
+		$type = $sanitize( 'bannermonster_type' );
 		$allowed = array( 'banner_top', 'banner_bottom', 'popup_center', 'popup_bottom_right', 'popup_bottom_left' );
 		if ( $type && in_array( $type, $allowed, true ) ) {
-			update_post_meta( $post_id, 'bm_type', $type );
+			update_post_meta( $post_id, 'bannermonster_type', $type );
 		}
 
-		update_post_meta( $post_id, 'bm_enabled', $checkbox( 'bm_enabled' ) );
-		update_post_meta( $post_id, 'bm_overlay', $checkbox( 'bm_overlay' ) );
-		update_post_meta( $post_id, 'bm_close_on_click', $checkbox( 'bm_close_on_click' ) );
-		update_post_meta( $post_id, 'bm_close_enabled', $checkbox( 'bm_close_enabled' ) );
+		update_post_meta( $post_id, 'bannermonster_enabled', $checkbox( 'bannermonster_enabled' ) );
+		update_post_meta( $post_id, 'bannermonster_overlay', $checkbox( 'bannermonster_overlay' ) );
+		update_post_meta( $post_id, 'bannermonster_close_on_click', $checkbox( 'bannermonster_close_on_click' ) );
+		update_post_meta( $post_id, 'bannermonster_close_enabled', $checkbox( 'bannermonster_close_enabled' ) );
 
-		$width = $int( 'bm_width' );
-		update_post_meta( $post_id, 'bm_width', $width ? min( $width, 100 ) : 100 );
+		$width = $int( 'bannermonster_width' );
+		update_post_meta( $post_id, 'bannermonster_width', $width ? min( $width, 100 ) : 100 );
 
-		$max_w = $int( 'bm_max_width' );
-		update_post_meta( $post_id, 'bm_max_width', $max_w ? min( $max_w, 1200 ) : 600 );
+		$max_w = $int( 'bannermonster_max_width' );
+		update_post_meta( $post_id, 'bannermonster_max_width', $max_w ? min( $max_w, 1200 ) : 600 );
 
 		// Display
-		$display = $sanitize( 'bm_display_where' );
+		$display = $sanitize( 'bannermonster_display_where' );
 		$display_allowed = array( 'all', 'posts', 'cpts', 'specific_posts', 'specific_pages', 'specific_cpts', 'urls', 'taxonomies' );
 		if ( $display && in_array( $display, $display_allowed, true ) ) {
-			update_post_meta( $post_id, 'bm_display_where', $display );
+			update_post_meta( $post_id, 'bannermonster_display_where', $display );
 		}
 
-		$pages = isset( $_POST['bm_show_on_pages'] ) && is_array( $_POST['bm_show_on_pages'] ) ? array_map( 'absint', wp_unslash( $_POST['bm_show_on_pages'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		update_post_meta( $post_id, 'bm_show_on_pages', $pages );
+		$pages = isset( $_POST['bannermonster_show_on_pages'] ) && is_array( $_POST['bannermonster_show_on_pages'] ) ? array_map( 'absint', wp_unslash( $_POST['bannermonster_show_on_pages'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		update_post_meta( $post_id, 'bannermonster_show_on_pages', $pages );
 
-		$posts = isset( $_POST['bm_show_on_posts'] ) && is_array( $_POST['bm_show_on_posts'] ) ? array_map( 'absint', wp_unslash( $_POST['bm_show_on_posts'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		update_post_meta( $post_id, 'bm_show_on_posts', $posts );
+		$posts = isset( $_POST['bannermonster_show_on_posts'] ) && is_array( $_POST['bannermonster_show_on_posts'] ) ? array_map( 'absint', wp_unslash( $_POST['bannermonster_show_on_posts'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		update_post_meta( $post_id, 'bannermonster_show_on_posts', $posts );
 
-		$cpts = isset( $_POST['bm_show_on_cpts'] ) && is_array( $_POST['bm_show_on_cpts'] ) ? array_map( 'absint', wp_unslash( $_POST['bm_show_on_cpts'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-		update_post_meta( $post_id, 'bm_show_on_cpts', $cpts );
+		$cpts = isset( $_POST['bannermonster_show_on_cpts'] ) && is_array( $_POST['bannermonster_show_on_cpts'] ) ? array_map( 'absint', wp_unslash( $_POST['bannermonster_show_on_cpts'] ) ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing
+		update_post_meta( $post_id, 'bannermonster_show_on_cpts', $cpts );
 
-		update_post_meta( $post_id, 'bm_show_on_urls', $sanitize( 'bm_show_on_urls', 'sanitize_textarea_field' ) );
+		update_post_meta( $post_id, 'bannermonster_show_on_urls', $sanitize( 'bannermonster_show_on_urls', 'sanitize_textarea_field' ) );
 
 		$taxonomies = array();
-		$raw_taxonomies = isset( $_POST['bm_show_on_taxonomies'] ) ? wp_unslash( $_POST['bm_show_on_taxonomies'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$raw_taxonomies = isset( $_POST['bannermonster_show_on_taxonomies'] ) ? wp_unslash( $_POST['bannermonster_show_on_taxonomies'] ) : array(); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( is_array( $raw_taxonomies ) ) {
 			foreach ( $raw_taxonomies as $tax => $terms ) {
 				if ( ! is_array( $terms ) ) {
@@ -348,40 +344,39 @@ class BannerMonster_Admin {
 				}
 			}
 		}
-		update_post_meta( $post_id, 'bm_show_on_taxonomies', $taxonomies );
+		update_post_meta( $post_id, 'bannermonster_show_on_taxonomies', $taxonomies );
 
 		// Trigger
-		$trigger = $sanitize( 'bm_trigger' );
+		$trigger = $sanitize( 'bannermonster_trigger' );
 		$trigger_allowed = array( 'immediate', 'timer', 'exit_intent', 'scroll' );
 		if ( $trigger && in_array( $trigger, $trigger_allowed, true ) ) {
-			update_post_meta( $post_id, 'bm_trigger', $trigger );
+			update_post_meta( $post_id, 'bannermonster_trigger', $trigger );
 		}
 
-		$seconds = $int( 'bm_trigger_seconds' );
-		update_post_meta( $post_id, 'bm_trigger_seconds', $seconds ? min( $seconds, 300 ) : 5 );
+		$seconds = $int( 'bannermonster_trigger_seconds' );
+		update_post_meta( $post_id, 'bannermonster_trigger_seconds', $seconds ? min( $seconds, 300 ) : 5 );
 
-		$scroll = $int( 'bm_trigger_scroll' );
-		update_post_meta( $post_id, 'bm_trigger_scroll', $scroll ? min( $scroll, 100 ) : 50 );
+		$scroll = $int( 'bannermonster_trigger_scroll' );
+		update_post_meta( $post_id, 'bannermonster_trigger_scroll', $scroll ? min( $scroll, 100 ) : 50 );
 
-		$reappear = $int( 'bm_reappear' );
-		update_post_meta( $post_id, 'bm_reappear', $reappear ? min( $reappear, 525600 ) : 0 );
+		$reappear = $int( 'bannermonster_reappear' );
+		update_post_meta( $post_id, 'bannermonster_reappear', $reappear ? min( $reappear, 525600 ) : 0 );
 
 		// Stile
-		update_post_meta( $post_id, 'bm_bg_color', sanitize_hex_color( wp_unslash( $_POST['bm_bg_color'] ?? '' ) ) ?: '#0073aa' );
-		update_post_meta( $post_id, 'bm_text_color', sanitize_hex_color( wp_unslash( $_POST['bm_text_color'] ?? '' ) ) ?: '#ffffff' );
-		update_post_meta( $post_id, 'bm_border_color', sanitize_hex_color( wp_unslash( $_POST['bm_border_color'] ?? '' ) ) );
+		update_post_meta( $post_id, 'bannermonster_bg_color', sanitize_hex_color( wp_unslash( $_POST['bannermonster_bg_color'] ?? '' ) ) ?: '#0073aa' );
+		update_post_meta( $post_id, 'bannermonster_text_color', sanitize_hex_color( wp_unslash( $_POST['bannermonster_text_color'] ?? '' ) ) ?: '#ffffff' );
+		update_post_meta( $post_id, 'bannermonster_border_color', sanitize_hex_color( wp_unslash( $_POST['bannermonster_border_color'] ?? '' ) ) );
 
-		$bw = $int( 'bm_border_width' );
-		update_post_meta( $post_id, 'bm_border_width', $bw ? min( $bw, 20 ) : 0 );
+		$bw = $int( 'bannermonster_border_width' );
+		update_post_meta( $post_id, 'bannermonster_border_width', $bw ? min( $bw, 20 ) : 0 );
 
-		$pad = $int( 'bm_padding' );
-		update_post_meta( $post_id, 'bm_padding', $pad ? min( $pad, 100 ) : 15 );
+		$pad = $int( 'bannermonster_padding' );
+		update_post_meta( $post_id, 'bannermonster_padding', $pad ? min( $pad, 100 ) : 15 );
 
-		$fs = $int( 'bm_font_size' );
-		update_post_meta( $post_id, 'bm_font_size', $fs ? min( $fs, 48 ) : 16 );
+		$fs = $int( 'bannermonster_font_size' );
+		update_post_meta( $post_id, 'bannermonster_font_size', $fs ? min( $fs, 48 ) : 16 );
 
-		update_post_meta( $post_id, 'bm_css_class', $sanitize( 'bm_css_class' ) );
-		update_post_meta( $post_id, 'bm_custom_css', $this->sanitize_css( wp_unslash( $_POST['bm_custom_css'] ?? '' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		update_post_meta( $post_id, 'bannermonster_css_class', $sanitize( 'bannermonster_css_class' ) );
 
 		BannerMonster_CPT::clear_cache();
 	}
@@ -389,28 +384,15 @@ class BannerMonster_Admin {
 	/* ---- Meta updated/deleted callbacks ---- */
 
 	public function on_meta_updated( $meta_id, $post_id, $meta_key ) {
-		if ( strpos( $meta_key, 'bm_' ) === 0 ) {
+		if ( strpos( $meta_key, 'bannermonster_' ) === 0 ) {
 			BannerMonster_CPT::clear_cache();
 		}
 	}
 
 	public function on_meta_deleted( $meta_id, $post_id, $meta_key ) {
-		if ( strpos( $meta_key, 'bm_' ) === 0 ) {
+		if ( strpos( $meta_key, 'bannermonster_' ) === 0 ) {
 			BannerMonster_CPT::clear_cache();
 		}
-	}
-
-	/* ---- CSS Sanitizer ---- */
-
-	private function sanitize_css( $css ) {
-		$css = wp_strip_all_tags( $css );
-		$css = preg_replace( '/\/\*.*?\*\//s', '', $css );
-		$css = preg_replace( '/expression\s*\(/i', '', $css );
-		$css = preg_replace( '/@import/i', '', $css );
-		$css = preg_replace( '/url\s*\(/i', '', $css );
-		$css = preg_replace( '/behavior\s*:/i', '', $css );
-		$css = preg_replace( '/-moz-binding\s*:/i', '', $css );
-		return trim( $css );
 	}
 
 	/* ---- Pickers (lazy-loaded) ---- */
@@ -422,7 +404,7 @@ class BannerMonster_Admin {
 			echo '<p>' . esc_html__( 'Nessuna pagina trovata.', 'bannermonster' ) . '</p>';
 			return;
 		}
-		echo '<select name="bm_show_on_pages[]" multiple class="bm-multi">';
+		echo '<select name="bannermonster_show_on_pages[]" multiple class="bannermonster-multi">';
 		foreach ( $pages as $p ) {
 			printf(
 				'<option value="%d" %s>%s</option>',
@@ -446,7 +428,7 @@ class BannerMonster_Admin {
 			echo '<p>' . esc_html__( 'Nessun post trovato.', 'bannermonster' ) . '</p>';
 			return;
 		}
-		echo '<select name="bm_show_on_posts[]" multiple class="bm-multi">';
+		echo '<select name="bannermonster_show_on_posts[]" multiple class="bannermonster-multi">';
 		foreach ( $posts as $p ) {
 			printf(
 				'<option value="%d" %s>%s</option>',
@@ -476,7 +458,7 @@ class BannerMonster_Admin {
 				continue;
 			}
 			echo '<p><strong>' . esc_html( $cpt->label ) . '</strong></p>';
-			echo '<select name="bm_show_on_cpts[]" multiple class="bm-multi">';
+			echo '<select name="bannermonster_show_on_cpts[]" multiple class="bannermonster-multi">';
 			foreach ( $items as $p ) {
 				printf(
 					'<option value="%d" %s>%s</option>',
@@ -502,7 +484,7 @@ class BannerMonster_Admin {
 				continue;
 			}
 			echo '<p><strong>' . esc_html( $tax->label ) . '</strong></p>';
-			echo '<select name="bm_show_on_taxonomies[' . esc_attr( $tax->name ) . '][]" multiple class="bm-multi">';
+			echo '<select name="bannermonster_show_on_taxonomies[' . esc_attr( $tax->name ) . '][]" multiple class="bannermonster-multi">';
 			foreach ( $terms as $term ) {
 				$is_sel = false;
 				foreach ( $selected as $s ) {

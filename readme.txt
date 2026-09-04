@@ -4,7 +4,7 @@ Tags: banner, popup, modal, marketing, conversion
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,7 +50,6 @@ BannerMonster lets you create custom banners and popups for your WordPress site 
 * Padding, font size, border width
 * Width (%) and max-width (px) for popups
 * Custom CSS classes per banner
-* Custom CSS per banner (sanitized on save)
 * Close button with configurable persistence
 * Overlay for popups with optional close-on-click
 
@@ -66,7 +65,7 @@ BannerMonster lets you create custom banners and popups for your WordPress site 
 
 **Debug mode:**
 
-* Append ?bm_debug=1 to any URL to bypass localStorage persistence
+* Append ?bannermonster_debug=1 to any URL to bypass localStorage persistence
 * Banner appears on every page load regardless of close state
 
 **Zero dependencies** on the frontend. jQuery is only used in the admin area.
@@ -105,15 +104,15 @@ Yes. In the display rules you can choose from: all pages, all posts, all CPTs, s
 
 = How does debug mode work? =
 
-Add ?bm_debug=1 to any URL on your site. When this parameter is present, all banners appear on every page load regardless of localStorage state. Useful during development and testing. A notice appears in the admin metabox when debug mode is active.
+Add ?bannermonster_debug=1 to any URL on your site. When this parameter is present, all banners appear on every page load regardless of localStorage state. Useful during development and testing. A notice appears in the admin metabox when debug mode is active.
 
 = Does it work with page builders like Elementor, Divi or WPBakery? =
 
 Yes. BannerMonster uses high-specificity CSS selectors with !important declarations to ensure your banner styles are applied regardless of what your theme or page builder does.
 
-= Can I use custom CSS? =
+= Can I use custom CSS classes? =
 
-Yes. Each banner has a CSS Class field for adding classes, and a Custom CSS field for writing CSS scoped to that specific banner. The custom CSS is sanitized on save to prevent XSS.
+Yes. Each banner has a CSS Class field for adding custom CSS classes that are applied to the banner container.
 
 = Does it conflict with caching plugins? =
 
@@ -140,6 +139,16 @@ Yes. All user-facing strings use WordPress translation functions with the 'banne
 
 == Changelog ==
 
+= 1.6.0 =
+* Removed custom CSS field to comply with WordPress.org plugin guidelines.
+* Renamed all internal prefixes from `bm` to `bannermonster` for unique naming compliance.
+* Post type renamed from `bm_banner` to `bannermonster_banner`.
+* All meta keys, options, cache keys and JS variables now use `bannermonster_` prefix.
+* Debug parameter renamed from `?bm_debug=1` to `?bannermonster_debug=1`.
+* localStorage key renamed from `bm_closed` to `bannermonster_closed`.
+* Enqueue handles renamed to `bannermonster-front` and `bannermonster-admin`.
+* CSS classes renamed from `bm-*` to `bannermonster-*`.
+
 = 1.5.0 =
 * Migrated popups and banners from `<div>` to native HTML `<dialog>` element.
 * Full WCAG 2.2 compliance: focus trap, Escape key, backdrop click, aria-label.
@@ -159,6 +168,9 @@ Yes. All user-facing strings use WordPress translation functions with the 'banne
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.6.0 =
+Plugin review compliance update: removed custom CSS field and renamed all prefixes to `bannermonster` for unique naming.
 
 = 1.5.0 =
 Accessibility update: popups and banners now use native HTML `<dialog>` for full WCAG 2.2 compliance.

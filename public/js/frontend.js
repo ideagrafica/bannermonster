@@ -5,7 +5,7 @@
 (function () {
 	'use strict';
 
-	var STORAGE_KEY = 'bm_closed';
+	var STORAGE_KEY = 'bannermonster_closed';
 	var closed = {};
 	var debugMode = false;
 
@@ -58,9 +58,9 @@
 	// --- Dialog helpers ---
 
 	function isModal(el) {
-		return el.classList.contains('bm-popup_center') ||
-		       el.classList.contains('bm-popup_bottom_right') ||
-		       el.classList.contains('bm-popup_bottom_left');
+		return el.classList.contains('bannermonster-popup_center') ||
+		       el.classList.contains('bannermonster-popup_bottom_right') ||
+		       el.classList.contains('bannermonster-popup_bottom_left');
 	}
 
 	function setupBackdropClose(dialog, id, backdropClose) {
@@ -123,7 +123,7 @@
 			var b = banners[i];
 			if (!canShow(b.id, b.reappear)) continue;
 
-			var el = document.getElementById('bm-' + b.id);
+			var el = document.getElementById('bannermonster-' + b.id);
 			if (!el) continue;
 
 			var popup = isModal(el);
@@ -172,7 +172,7 @@
 		loadClosed();
 
 		document.addEventListener('click', function (e) {
-			var btn = e.target.closest('.bm-x');
+			var btn = e.target.closest('.bannermonster-x');
 			if (!btn) return;
 			var dialog = btn.closest('dialog');
 			if (!dialog) return;
@@ -181,13 +181,13 @@
 			saveClosed(id);
 		});
 
-		if (typeof bmData !== 'undefined') {
-			debugMode = !!bmData.debug;
+		if (typeof bannermonsterData !== 'undefined') {
+			debugMode = !!bannermonsterData.debug;
 			if (debugMode) {
 				console.log('[BannerMonster] Debug mode active - localStorage bypassed');
 			}
-			if (bmData.banners) {
-				process(bmData.banners);
+			if (bannermonsterData.banners) {
+				process(bannermonsterData.banners);
 			}
 		}
 	}

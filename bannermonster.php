@@ -3,7 +3,7 @@
  * Plugin Name: BannerMonster
  * Plugin URI: https://incod.it/bannermonster
  * Description: Create accessible banners and popups with advanced targeting, WCAG 2.2 compliance, and native HTML dialog.
- * Version: 1.5.0
+ * Version: 1.6.0
  * Author: Marco De Sangro (inCod)
  * Author URI: https://incod.it/bannermonster/
  * License: GPL-2.0+
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'BANNERMONSTER_VERSION', '1.5.0' );
+define( 'BANNERMONSTER_VERSION', '1.6.0' );
 define( 'BANNERMONSTER_PATH', plugin_dir_path( __FILE__ ) );
 define( 'BANNERMONSTER_URL', plugin_dir_url( __FILE__ ) );
 define( 'BANNERMONSTER_BASE', plugin_basename( __FILE__ ) );
